@@ -1,5 +1,5 @@
 #include "InputSocket.h"
-#include "../debug.h"
+#include "../Debug.h"
 
 InputSocket::InputSocket(Node* parent, std::string Name, SocketDrive drive, SOCKETTYPE defaultValue) : Socket(parent, Name, drive) 
 { 
