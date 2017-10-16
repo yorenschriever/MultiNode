@@ -1,7 +1,7 @@
 //#include <stdlib.h>
 #include <string>
 #include "Node.h"
-#include "../debug.h"
+#include "../Debug.h"
 #include "../NodeManager.h"
 
 Node::Node(){
