@@ -1,0 +1,171 @@
+html,
+body {
+  width: 100%;
+  height: 100%
+}
+
+html,
+body,
+div {
+  margin: 0px;
+  padding: 0px;
+}
+
+#ui-browser,
+#canvas,
+#property-browser {
+  height: 100%;
+  display: inline-block;
+  box-sizing: border-box;
+  position: relative;
+}
+
+#ui-browser {
+  width: 20%;
+  background-color: #eee;
+  float: left;
+  overflow: hidden;
+}
+
+#canvas {
+  width: 100%;
+}
+
+#property-browser {
+  width: 20%;
+  background-color: #eee;
+}
+
+
+/*Anchor CSS*/
+
+.anchor {
+  opacity: 0.5;
+  width: 10px;
+  height: 100%;
+  background-color: #0ebeff;
+  position: absolute;
+  transition: width ease-in-out 0.2s;
+}
+
+#ui-browser:hover > .anchor,
+#property-browser:hover > .anchor {
+  background-color: #ffbe00;
+  width: 10px;
+  opacity: 1;
+}
+
+#ui-browser .anchor {
+  right: 0px;
+}
+
+.ui-item {
+  postion: absolute;
+  width: 175px;
+  /*height: 250px;*/
+  /*background-color: #eef;*/
+  top: -2px;
+  left: -2px;
+
+  padding: 5px;
+  padding-bottom: 10px;
+  margin:1px;
+
+  border-radius: 5px;
+  border:1px solid #ccd;
+
+  background : rgba(200,200,255,0.3);
+}
+
+.node_title {
+  width: 100%;
+  font-size:10pt;
+  text-align:center;
+  font-family: helvetica;
+  font-weight:bold;
+}
+
+.socket_title {
+  display:inline;
+  font-family: helvetica; 
+  font-size:10pt;
+  padding-left: 5px;
+  padding-right: 5px;
+} 
+
+
+.socket_in, .socket_out {
+  padding:0;
+  margin: 0;
+  /*border:1px solid red;*/
+}
+
+
+.socket_end {clear:both;}
+.sockets_in { float:left;}
+.sockets_out { float:right; text-align:right;}
+
+/* //also blocks ui
+#connector_canvas {
+  z-index: 1;
+}*/
+
+.con_anchor {
+  width: 8px;
+  height: 8px;
+  background-color: #47cf73;
+  border-radius: 50%;
+  z-index: 5;
+  display: inline-block;
+}
+
+.con_anchor_ghost {
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 50%;
+  z-index: 5;
+  display: inline-block;
+  margin-left:-8px;
+}
+
+#connector_canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  stroke: #5c96bc;
+  stroke-width: 2
+}
+
+.library {
+  border-left: 10px solid #5c96bc;
+  background-color: white;
+  color: #0ebeff;
+  padding-bottom: 1px;
+}
+
+.library ul {
+  list-style-type: none;
+}
+
+.library .name-title {
+  text-align: center;
+  padding-top: 5px;
+}
+
+.library ul li {
+  border-bottom: 1px solid #eee;
+  margin-right: 20px;
+  color: #4c4545;
+  padding: 5px;
+  margin-left: 15px;
+  cursor: pointer;
+  transition: all ease-out 0.1s;
+}
+
+.library ul li:hover {
+  background-color: #4c4545;
+  color: white;
+  text-align: center;
+  font-size: 1.2em;
+}

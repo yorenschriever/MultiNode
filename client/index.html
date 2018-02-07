@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="googlebot" content="noindex, nofollow">
+
+  <!--<link rel="stylesheet" type="text/css" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">-->
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" type="text/css" href="test6.css"/>
+
+  <title></title>
+
+  <script src="interaction.js" type='text/javascript'></script>
+  <script src="websocket.js" type='text/javascript'></script>
+</head>
+
+<body>
+  
+<div id="canvas">
+  <svg id='connector_canvas'>
+
+  </svg>
+
+  <div class="node ui-item item-1">
+    <div class="node_title">test</div>
+
+    <div class="sockets_in">
+      <div class="socket_in"><div class="con_anchor"></div><div class="socket_title">x</div></div>
+      <div class="socket_in"><div class="con_anchor"></div><div class="socket_title">y</div></div>
+      <div class="socket_in"><div class="con_anchor"></div><div class="socket_title">angle</div></div>
+      <div class="socket_in"><div class="con_anchor"></div><div class="socket_title">colour</div></div>
+    </div>
+    <div class="sockets_out">
+      <div class="socket_out"><div class="socket_title">beat</div><div class="con_anchor"></div><div class="con_anchor_ghost"></div></div>
+      <div class="socket_out"><div class="socket_title">frq</div><div class="con_anchor"></div><div class="con_anchor_ghost"></div></div>
+    </div>
+    <div class="socket_end"></div>   
+  </div>
+
+
+
+  <div class="node ui-item item-1">
+    <div class="node_title">HSL to colour</div>
+
+    <div class="sockets_in">
+      <div class="socket_in"><div class="con_anchor"></div><div class="socket_title">H</div></div>
+      <div class="socket_in"><div class="con_anchor"></div><div class="socket_title">S</div></div>
+      <div class="socket_in"><div class="con_anchor"></div><div class="socket_title">L</div></div>
+    </div>
+    <div class="sockets_out">
+      <div class="socket_out"><div class="socket_title">Colour</div><div class="con_anchor"></div><div class="con_anchor_ghost"></div></div>
+    </div>
+    <div class="socket_end"></div>   
+  </div>
+
+  <div class="node ui-item item-1">
+    <div class="node_title">LFO</div>
+
+    <div class="sockets_in">
+      <div class="socket_in"><div class="con_anchor"></div><div class="socket_title">Period</div></div>
+      <div class="socket_in"><div class="con_anchor"></div><div class="socket_title">Type</div></div>
+      <div class="socket_in"><div class="con_anchor"></div><div class="socket_title">Amplitude</div></div>
+      <div class="socket_in"><div class="con_anchor"></div><div class="socket_title">Offset</div></div>
+    </div>
+    <div class="sockets_out">
+      <div class="socket_out"><div class="socket_title">Value</div><div class="con_anchor"></div><div class="con_anchor_ghost"></div></div>
+    </div>
+    <div class="socket_end"></div>   
+  </div>
+
+
+
+</div>
+
+</body>
+
+</html>
+
