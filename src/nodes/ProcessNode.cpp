@@ -2,7 +2,7 @@
 #include "ProcessNode.h"
 #include "../sockets/OutputSocket.h"
 #include "../NodeManager.h"
-#include "../debug.h"
+#include "../Debug.h"
 #include <string>
 #include <iostream>
 

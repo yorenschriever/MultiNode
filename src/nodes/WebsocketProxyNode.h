@@ -3,7 +3,7 @@
 
 #include "AbstractProxyNode.h"
 
-#define PROXYPORT 9603
+#define WEBSOCKETPROXYPORT 9603
 
 class WebsocketProxyNode : public AbstractProxyNode
 {

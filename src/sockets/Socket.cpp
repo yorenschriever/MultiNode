@@ -1,5 +1,5 @@
 #include "Socket.h"
-#include "../debug.h"
+#include "../Debug.h"
 
 Node* Socket::GetNode()
 {

@@ -1,5 +1,5 @@
 #include "OutputSocket.h"
-#include "../debug.h"
+#include "../Debug.h"
 
 OutputSocket::OutputSocket(Node* parent, std::string Name, SocketDrive drive) : Socket(parent, Name, drive) { }
 OutputSocket::OutputSocket() : Socket() { }
