@@ -32,7 +32,7 @@ class Node
 
 	private:
 		std::map<std::string, InputSocket*> InputSockets;
-		unsigned int frameNumber=0;
+		unsigned int frameNumber=-1;
 };
 
 #endif
