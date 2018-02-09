@@ -2,7 +2,5 @@
 
 
 
-
-
 ### install as arduino lib
-ln -s  ~/path/to/MultiNode/platforms/arduinolib/ ~/Documents/Arduino/libraries/
+ln -s  ~/path/to/MultiNode/platforms/arduinolib/ ~/Documents/Arduino/libraries/MultiNode
