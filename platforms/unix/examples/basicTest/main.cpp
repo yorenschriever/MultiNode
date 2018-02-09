@@ -1,9 +1,9 @@
 
-#include "Socket.h"
-#include "Nodes.h"
-//#include "NodeManager.h"
+#include "../../../../src/nodes/ProcessNodes.h"
+#include "../../../../src/NodeManager.h"
+#include "../../../../src/Debug.h"
 
-#include <iostream>
+#include <string>
 
 int main(){
 
@@ -17,10 +17,7 @@ int main(){
 	Y.GetInputSocket("A")->SetValue(2);
 	Y.GetInputSocket("B")->SetValue(100);
 
-	std::cout << "Antwoord: "  << X.GetOutputSocket("C")->GetValue() << "\n";
+	Debug::Info("Antwoord: " + std::to_string(X.GetOutputSocket("C")->GetValue()));
 
-	//NodeManager::AutoProcess();
-
-	return 0;
-	
+	return 0;	
 }

@@ -1,6 +1,5 @@
 #include "Arduino.h"
 
-#include "patches.h"
 
 #include "../../src/nodes/ProcessNodes.h"
 #include "../../src/nodes/ShapeNodes.h"
@@ -12,6 +11,7 @@
 
 #include "NodesArduino.h"
 
+#include "implementations/Patches.h"
 #include "implementations/WebsocketESP.h"
 #include "implementations/UDPSocketESP.h"
 
