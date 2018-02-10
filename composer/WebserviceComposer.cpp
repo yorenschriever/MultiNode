@@ -1,3 +1,5 @@
+#define WITHCOMPOSER
+
 #include "WebserviceComposer.h"
 #include "../src/Debug.h"
 #include <functional>
@@ -31,20 +33,97 @@ void WebserviceComposer::handleMsg(uint8_t num, uint8_t * payload, size_t length
     Debug::Info("got msg: " + std::string((char*)payload,length));
     ws->sendMessage(std::string((char*)payload,length));
 
+    Command comm;
+    parseCommand((char*) payload, &comm);
 
-    if (!strcmp("GETALL",(const char*) payload))
-    {
-        NodeManager::ResetIterator();
-        Node* pointer=0;
-        while(pointer = NodeManager::GetNextNode())
+    if (!strcmp("GetAll",comm.name))
+        SendAllNodesToClient();
+
+    if (!strcmp("Move",comm.name))
+        Move(
+            comm.params[std::string("id")].AsIndex(), 
+            comm.params["x"].AsIndex(),
+            comm.params["y"].AsIndex());
+    
+
+}
+
+void WebserviceComposer::parseCommand(char* cmd, Command* command)
+{
+  char *endptr;
+  JsonValue value;
+  JsonAllocator allocator;
+
+  int status = jsonParse(cmd, &endptr, &value, allocator);
+  if (status != JSON_OK) {
+    Debug::Error(std::string("Unable to parse JSON: ") + jsonStrError(status)) ;
+    return;
+  }    
+
+  command->name="";
+  command->params = std::map<std::string,Value>();
+  
+  if (value.getTag() != JSON_OBJECT){
+    Debug::Error("Command is wrong type");
+    return;
+  }
+
+    for (auto i : value) {
+        if (!strcmp("cmd",i->key))
         {
-            SendNodeToClient(pointer);
-            //Debug::Info(std::string("Title: ") + pointer->Title);
-            //ws->sendMessage(std::string(pointer->Title));
+        command->name = i->value.toString();
+        continue;
         }
-        ws->sendMessage("{\"initconn\": true}");
-    }
 
+        if (!strcmp("params",i->key))
+        {
+
+            for (auto j : i->value) 
+            {
+                JsonTag tag = j->value.getTag();
+
+                Value v; // = Value(0);
+                if (tag == JSON_NUMBER)
+                    v.SetValue((float)j->value.toNumber());
+
+                if (tag == JSON_STRING)
+                    v.SetValue( j->value.toString() ) ;
+
+                if (tag == JSON_TRUE)
+                    v.SetValue( true ) ;
+
+                if (tag == JSON_FALSE)
+                    v.SetValue( false ) ;
+
+                command->params.insert( std::make_pair( std::string(j->key), v  ) );
+            }
+            continue;
+        }
+    
+    }
+}
+
+void WebserviceComposer::Move(int id, int x, int y)
+{
+    Node* node = NodeManager::GetNode(id);
+    if (node==0)
+        return;
+
+    node->x = x;
+    node->y = y;
+
+    SendNodeToClient(node);
+}
+
+void WebserviceComposer::SendAllNodesToClient()
+{
+    NodeManager::ResetIterator();
+    Node* pointer=0;
+    while(pointer = NodeManager::GetNextNode())
+    {
+        SendNodeToClient(pointer);
+    }
+    ws->sendMessage("{\"initconn\": true}");    
 }
 
 void WebserviceComposer::SendNodeToClient(Node* node)
@@ -55,6 +134,8 @@ void WebserviceComposer::SendNodeToClient(Node* node)
     std::string result = "";
     result += "{\"node\":{";
     result += "\"id\":" + std::to_string(node->id) + ",";
+    result += "\"x\":" + std::to_string(node->x) + ",";
+    result += "\"y\":" + std::to_string(node->y) + ",";
     result += "\"title\":\"" + node->Title + "\",";
 
     result += "\"inputs\":[" + serializeInputSockets(node->GetInputSockets()) + "]";
@@ -62,16 +143,6 @@ void WebserviceComposer::SendNodeToClient(Node* node)
     std::map<std::string, OutputSocket*>* outsocks = node->GetOutputSockets();
     if (outsocks!=0)
         result += ",\"outputs\":[" + serializeOutputSockets(outsocks) + "]";
-
-    //try to cast it to a procesnode
-    /*ProcessNode* processnode =  dynamic_cast<ProcessNode*> (node);
-
-    if (processnode != 0)
-    {
-        //if succesful, also print the outputs of the processnode
-        Debug::Info("Cast to processnode succesful");
-        result += "outputs: [" + serializeOutputSockets(processnode->GetOutputSockets()) + "],";
-    }*/
 
     result += "}}";
     ws->sendMessage(result);

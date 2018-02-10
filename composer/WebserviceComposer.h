@@ -7,6 +7,9 @@
 #include "../src/nodes/Node.h"
 #include "../src/nodes/ProcessNode.h"
 
+#include "../lib/gason/gason.h"
+#include "command.h"
+
 /**
  * The workhorse of the ui.
  * Will setup a websocket server, parse the incoming messages, and call the corresponding methods in Composer.
@@ -22,6 +25,8 @@ class WebserviceComposer{
         void handleMsg(uint8_t num, uint8_t * payload, size_t length);
         void loop();
 
+        void Move(int id, int x, int y);
+        void SendAllNodesToClient();
         void SendNodeToClient(Node* node);
     private:
         IWebsocket* ws;
@@ -29,6 +34,8 @@ class WebserviceComposer{
         //template<class T>
         std::string serializeInputSockets(std::map<std::string, InputSocket*>* socks);
         std::string serializeOutputSockets(std::map<std::string, OutputSocket*>* socks);
+
+        void parseCommand(char* cmd, Command* command);
 };
 
 #endif

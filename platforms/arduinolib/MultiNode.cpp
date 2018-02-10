@@ -19,8 +19,10 @@
 #include "../../src/sockets/Socket.cpp"
 
 #include "../../src/NodeManager.cpp"
+#include "../../src/Value.cpp"
 
 #include "../../lib/TinyXml/TinyXML.cpp"
+#include "../../lib/gason/gason.cpp"
 
 //TODO: refactor
 #include "../../src/networking/ChannelSerializer.cpp"

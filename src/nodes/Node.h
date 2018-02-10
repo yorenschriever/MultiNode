@@ -26,6 +26,9 @@ class Node
 		std::map<std::string, InputSocket*>* GetInputSockets();
 		virtual std::map<std::string, OutputSocket*>* GetOutputSockets(){return 0;} //TODO this is done to the ui can access the outputsockets. fix this is a neat way.
 
+//#ifdef WITHCOMPOSER
+		int x,y;
+//#endif
 
 	protected:
 		virtual void ProcessInternal(Socket* caller)=0; //TODO only processnodes can have this

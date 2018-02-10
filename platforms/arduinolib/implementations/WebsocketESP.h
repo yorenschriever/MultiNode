@@ -1,6 +1,7 @@
 #ifndef WEBSOCKETESP_H
 #define WEBSOCKETESP_H
 
+#include "Arduino.h"
 #include "../../../src/networking/IWebsocket.h"
 #include "../../../lib/arduinoWebSockets/src/WebSocketsServer.h"
 

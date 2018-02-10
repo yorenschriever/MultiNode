@@ -3,7 +3,7 @@
 var exampleSocket = new WebSocket("ws://192.168.1.144:81", "MultiNode");
 
 exampleSocket.onopen = function (event) {
-    exampleSocket.send("GETALL"); 
+    exampleSocket.send('{"cmd": "GetAll"}'); 
 };
 
 
@@ -116,8 +116,7 @@ function uploadMove(id, x, y, force=false)
 
     console.log("moving ", id, x, y);
 
-
-    content = JSON.stringify({move : {
+    content = JSON.stringify({cmd: "Move", params : {
         id: id,
         x: y,
         y: y
