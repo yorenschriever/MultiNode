@@ -4,6 +4,12 @@
 #include <stdint.h>
 #include <math.h>
 
+#ifndef SOCKETTYPE
+	#define SOCKETTYPE float
+	#define SOCKETTYPETOSTR "%f"
+	#define SOCKETTYPEPARSE atof
+#endif
+
 struct RGBA {
   uint8_t r;
   uint8_t g;
@@ -11,7 +17,9 @@ struct RGBA {
   float a;
 };
 
-
+//forward declarations
+//class Node;
+//class Socket;
 
 static const struct RGBA TRANSPARENT = { 0,0,0,0 };
 

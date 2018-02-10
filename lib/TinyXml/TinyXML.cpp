@@ -10,7 +10,7 @@
  *
  * See the examples for usage
  */
-#include <Arduino.h>
+//#include <Arduino.h>
 #include <inttypes.h>
 
 #include "TinyXMLTable.hpp"
@@ -47,7 +47,8 @@ void TinyXML::reset()
 void TinyXML::processChar(uint8_t ch)
 {
   uint16_t chToParse;
-  boolean bMatch=false;
+  bool bMatch=false;
+  //boolean bMatch=false;
   while (!bMatch)
   {
     chToParse = pgm_read_word(&(pTable[currentState].charToParse));

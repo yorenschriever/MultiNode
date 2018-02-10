@@ -6,12 +6,6 @@
 #include "../types.h"
 #include "../nodes/Node.h"
 
-#ifndef SOCKETTYPE
-	#define SOCKETTYPE float
-	#define SOCKETTYPETOSTR "%f"
-	#define SOCKETTYPEPARSE atof
-#endif
-
 class Node; //forward declaration to avoid circular include
 
 class Socket

@@ -2,11 +2,16 @@
 #define CHANNELSERIALIZER_H
 
 #include <string>
-#include "../../lib/TinyXml/TinyXML.h"
+//#include "../../lib/TinyXml/TinyXML.h"
 #include "../sockets/Socket.h" //TODO i dont want this reference? 
 #include "../nodes/ProcessNode.h" //TODO i dont want this reference? 
 
 #define MAXCHANNELNAMELENGTH 50
+
+//TODO is removed TinyXMl references from this file. the serialzer wont work
+//Fix this, or even better, rewrite the channelserializer 
+// - without static callbacks
+// - using the json parser
 
 class ChannelSerializer
 {
@@ -18,7 +23,7 @@ class ChannelSerializer
 		static SOCKETTYPE value;
 		
 	protected:
-		static TinyXML xml;
+		//static TinyXML xml;
 		static bool continueParsing;
 		static ProcessNode* node;
 		static uint8_t* buffer; // For XML decoding

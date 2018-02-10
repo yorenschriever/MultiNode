@@ -10,7 +10,7 @@ class AntiAliasNode : public RenderNode
 		AntiAliasNode();
 	private:
 		RGBA GetStackedColor(Position p);
-		RGBA colorAt(Position p) {}; 
+		RGBA colorAt(Position p) =0; 
 };
 
 #endif

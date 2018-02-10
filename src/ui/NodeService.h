@@ -16,7 +16,7 @@ class NodeService
 
 		static void GetAllNodes();
 
-		static void XMLIn(char* pointer)
+		static void XMLIn(char* pointer);
 		//TODO function pointer for return messages
 };
 

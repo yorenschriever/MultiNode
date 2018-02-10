@@ -3,6 +3,7 @@
 #include "Node.h"
 #include "../Debug.h"
 #include "../NodeManager.h"
+#include "../sockets/InputSocket.h"
 
 Node::Node(){
   NodeManager::AddNode(this);
@@ -13,7 +14,7 @@ Node::~Node(){
 }
 
 //this process method is being called from the nodemanager.autoprocess
-inline void Node::Process()
+void Node::Process()
 {
 	Process(0);
 }

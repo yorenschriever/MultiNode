@@ -1,5 +1,5 @@
 #include "NodeService.h"
 
-NodeService::MoveNode(IDTYPE id, int x, int y){
+void NodeService::MoveNode(int id, int x, int y){
 	
 }

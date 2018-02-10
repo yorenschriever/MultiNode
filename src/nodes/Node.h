@@ -2,11 +2,14 @@
 #define NODE_H
 
 #include <map>
-//#include <stdlib.h>
 #include <string>
-#include "../sockets/InputSocket.h"
-#include "../sockets/OutputSocket.h"
 #include "../types.h"
+//#include "../sockets/InputSocket.h"
+//#include "../sockets/OutputSocket.h"
+
+class Socket;
+class InputSocket;
+class OutputSocket;
 
 class Node 
 {

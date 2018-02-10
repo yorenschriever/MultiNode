@@ -9,7 +9,7 @@
 class IWebsocket : public ICommunication
 {
     public:
-        virtual void disconnect(uint8_t id);
+        virtual void disconnect(uint8_t id)=0;
 };
 
 #endif

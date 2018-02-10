@@ -1,9 +1,4 @@
-
-#include "../../../../src/nodes/ProcessNodes.h"
-#include "../../../../src/NodeManager.h"
-#include "../../../../src/Debug.h"
-
-#include <string>
+#include "MultiNode.h"
 
 int main(){
 

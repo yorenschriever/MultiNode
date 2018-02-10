@@ -1,5 +1,5 @@
-#ifndef IUDPSocket_H
-#define IUDPSocket_H
+#ifndef IUDPSOCKET_H
+#define IUDPSOCKET_H
 
 #include <string>
 #include <functional>
@@ -9,7 +9,9 @@
 class IUDPSocket : public ICommunication
 {
     public: 
-        bool sendMessage(uint32_t ip, uint16_t port, const char* msg, int len);
+        virtual bool sendMessage(uint32_t ip, uint16_t port, const char* msg, int len)=0;
 };
+
+
 
 #endif

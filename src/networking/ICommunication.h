@@ -10,14 +10,14 @@ class ICommunication
 {
     public:
 
-        virtual void begin();
-        virtual void onMessage(MessageEvent msgevent);
+        virtual void begin()=0;
+        virtual void onMessage(MessageEvent msgevent)=0;
 
-        virtual bool sendMessage(std::string txt);
-        virtual bool sendMessage(const char* msg, int len);
+        virtual bool sendMessage(std::string txt)=0;
+        virtual bool sendMessage(const char* msg, int len)=0;
 
         //virtual void disconnect(uint8_t id);
-        virtual void loop();
+        virtual void loop()=0;
 
 };
 

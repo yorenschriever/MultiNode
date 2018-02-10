@@ -6,6 +6,7 @@
 #include "../networking/UDPWrapperFactory.h"
 #include "../networking/ChannelSerializer.h"
 #include "../sockets/Socket.h"
+#include "../sockets/InputSocket.h"
 
 #include "../networking/IUDPSocketFactory.h"
 

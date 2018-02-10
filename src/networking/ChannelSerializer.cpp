@@ -9,7 +9,7 @@
 bool ChannelSerializer::continueParsing = true;
 ProcessNode* ChannelSerializer::node = 0;
 uint8_t* ChannelSerializer::buffer = (uint8_t*) malloc(XMLBUFFERSIZE);
-TinyXML ChannelSerializer::xml = TinyXML();
+//TinyXML ChannelSerializer::xml = TinyXML();
 std::string ChannelSerializer::channelName = std::string();
 SOCKETTYPE ChannelSerializer::value=0;
 bool ChannelSerializer::isInit = false;
@@ -21,7 +21,7 @@ void ChannelSerializer::init()
     return;
   isInit = true;
 	
-  xml.init((uint8_t *)buffer, XMLBUFFERSIZE, &ChannelSerializer::XML_callback);
+  //xml.init((uint8_t *)buffer, XMLBUFFERSIZE, &ChannelSerializer::XML_callback);
 }
 
 int ChannelSerializer::createMessage(char* buf, std::string name, SOCKETTYPE value)
@@ -30,7 +30,7 @@ int ChannelSerializer::createMessage(char* buf, std::string name, SOCKETTYPE val
 }		
 
 bool ChannelSerializer::parseMessage(char* buf, int msglen, ProcessNode* nodeInstance){
-  ChannelSerializer::node = nodeInstance;
+  /*ChannelSerializer::node = nodeInstance;
   //Debug::Info("Channelserializer is Setting node to: " + node->Title);
 
   xml.reset();
@@ -40,7 +40,7 @@ bool ChannelSerializer::parseMessage(char* buf, int msglen, ProcessNode* nodeIns
   for(int i=0;i<msglen && continueParsing;i++){
     xml.processChar(buf[i]);
   }
-
+  */
   return continueParsing;
 }
 
@@ -58,6 +58,7 @@ bool ChannelSerializer::channelExists(std::string channel)
 
 void ChannelSerializer::XML_callback(uint8_t statusflags, char* tagName, uint16_t tagNameLen, char* data, uint16_t dataLen)
 {
+  /*
   if (statusflags & STATUS_ERROR){
     continueParsing = false;
     Debug::Error("Error in xml parsing");
@@ -85,5 +86,5 @@ void ChannelSerializer::XML_callback(uint8_t statusflags, char* tagName, uint16_
   if (statusflags & STATUS_TAG_TEXT){
       value = SOCKETTYPEPARSE(data);  
   }
-
+  */
 }
