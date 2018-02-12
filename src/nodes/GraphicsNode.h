@@ -23,6 +23,10 @@ class GraphicsNode : public Node
 		void applyPositionAndTranslation(Position* p);
 
 		void ProcessInternal(Socket* caller) {}; //GraphicsNode do not process 
+
+		InputSocket* ptrX;
+		InputSocket* ptrY;
+		InputSocket* ptrRot;
 };
 
 #endif

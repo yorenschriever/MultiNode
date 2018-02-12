@@ -2,11 +2,13 @@
 #include "GraphicsNode.h"
 #include "../types.h"
 
+#include "../sockets/InputSocket.h"
+
 GraphicsNode::GraphicsNode()
 {
-	CreateInputSocket("x",Pull,0);
-	CreateInputSocket("y",Pull,0);
-	CreateInputSocket("rot",Pull,0);
+	ptrX  =  CreateInputSocket("x",Pull,0);
+	ptrY =   CreateInputSocket("y",Pull,0);
+	ptrRot = CreateInputSocket("rot",Pull,0);
 }
 
 RGBA GraphicsNode::GetStackedColor(Position p){
@@ -40,12 +42,12 @@ void GraphicsNode::applyPositionAndTranslation(Position* p)
 
 	//apply translation
 	p->TranslateMe(
-		-1 * getInput("x"), 
-		-1 * getInput("y")
+		-1 * ptrX->GetValue(), //getInput("x"), 
+		-1 * ptrY->GetValue()  //getInput("y")
 		);
 
 	//apply rotation
-	float r = getInput("rot");
+	float r = ptrRot->GetValue(); // getInput("rot");
 	if (r!=0)
 		p->RotateMe(r);
 

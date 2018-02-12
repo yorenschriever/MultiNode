@@ -11,6 +11,9 @@ class RectangleNode : public ShapeNode
 
 	private:
 		bool intersects(Position p);
+
+		InputSocket* ptrWidth;
+		InputSocket* ptrHeight;
 };
 
 class CircleNode : public ShapeNode
@@ -20,6 +23,8 @@ class CircleNode : public ShapeNode
 
 	private:
 		bool intersects(Position p);
+
+		InputSocket* ptrRadius;
 };
 
 #endif
