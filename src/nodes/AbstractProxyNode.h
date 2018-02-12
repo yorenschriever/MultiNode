@@ -1,10 +1,9 @@
 #ifndef ABSTRACTPROXYNODE_H
 #define ABSTRACTPROXYNODE_H
 
-#include "Node.h"
+#include "ProcessNode.h"
 #include "../networking/UDPWrapper.h"
 #include "../networking/UDPWrapperFactory.h"
-#include "../networking/ChannelSerializer.h"
 #include "../sockets/Socket.h"
 #include "../sockets/InputSocket.h"
 
@@ -105,15 +104,17 @@ class AbstractProxyNode : public ProcessNode
 		void DeleteTransmitter(std::string Name);
 		void DeleteReceiver(std::string Name);
 	protected:
-		//UDPWrapper* udp = UDPWrapperFactory::getWrapper();
     ICommunication* comm;
 
-    //virtual void setCommunicationObject(uint16_t port);
     void handleMsg(uint8_t num, uint8_t * payload, size_t length);
 
 		virtual void ProcessInternal(Socket* caller);
 		void sendValue(Socket* socket);
 		void receiveValues();
+
+    int createMessage(char* buf, std::string socketname, SOCKETTYPE value);
+    bool channelExists(std::string channel);
+
 };
 
 #endif

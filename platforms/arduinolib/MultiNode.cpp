@@ -21,11 +21,7 @@
 #include "../../src/NodeManager.cpp"
 #include "../../src/Value.cpp"
 
-#include "../../lib/TinyXml/TinyXML.cpp"
 #include "../../lib/gason/gason.cpp"
-
-//TODO: refactor
-#include "../../src/networking/ChannelSerializer.cpp"
 
 #include "implementations/Time.cpp"
 #include "implementations/Debug.cpp"
@@ -34,8 +30,8 @@
 #include "implementations/IUDPSocketFactory.cpp"
 #include "implementations/UDPSocketESP.cpp"
 
-#include "../../lib/arduinoWebSockets/src/WebSocketsServer.cpp"
-#include "../../lib/arduinoWebSockets/src/WebSockets.cpp"
+#include "lib/arduinoWebSockets/src/WebSocketsServer.cpp"
+#include "lib/arduinoWebSockets/src/WebSockets.cpp"
 
 //#ifdef WITHCOMPOSER
     #include "../../composer/WebserviceComposer.cpp"

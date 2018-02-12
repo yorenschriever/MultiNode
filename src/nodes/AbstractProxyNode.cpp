@@ -3,22 +3,10 @@
 #include "../NodeManager.h"
 
 #include "../networking/IUDPSocketFactory.h"
-
-
-//#define BROADCASTADDRESS 0xFFFFFFFF
-
-
+#include "../../lib/gason/gason.h"
 
 AbstractProxyNode::AbstractProxyNode(){
 	Title="ProxyNode";
-
-	//setCommunicationObject(PROXYPORT);
-	//comm->onMessage(std::bind(&ProxyNode::handleMsg, this,_1,_2,_3));
-	//comm->begin();
-
-	//udp->begin(PROXYPORT);
-	ChannelSerializer::init();
-
 	NodeManager::AutoProcessNode(this);
 }
 AbstractProxyNode::~AbstractProxyNode(){}
@@ -89,7 +77,8 @@ void AbstractProxyNode::ProcessInternal(Socket* caller)
 void AbstractProxyNode::sendValue(Socket* socket)
 {
 	char buf[150];
-	int actualLen = ChannelSerializer::createMessage(buf, socket->Name, socket->GetValue());
+	//int actualLen = ChannelSerializer::createMessage(buf, socket->Name, socket->GetValue());
+	int actualLen = createMessage(buf, socket->Name, socket->GetValue());
 
 	//udp->send(BROADCASTADDRESS,PROXYPORT,buf,actualLen);
 	comm->sendMessage(buf,actualLen);
@@ -98,37 +87,63 @@ void AbstractProxyNode::sendValue(Socket* socket)
 
 void AbstractProxyNode::handleMsg(uint8_t num, uint8_t * payload, size_t length)
 { 
-		Debug::Info("Got: " + std::string((const char*)payload, length));
+	Debug::Info("Got: " + std::string((const char*)payload, length));
 
-		if (ChannelSerializer::parseMessage((char*)payload,length,this))
-		{
-			//Debug::Info("Setting channel/value:");
-			//Debug::Info(String(ChannelSerializer::channelName.c_str()));
-			//Debug::Info(String(ChannelSerializer::value));
-			setOutput(ChannelSerializer::channelName,ChannelSerializer::value);
-		}	
-}
+	char *endptr;
+	JsonValue value;
+	JsonAllocator allocator;
 
-/*
-void ProxyNode::receiveValues()
-{
-	int msglen = udp->available();
-	while (msglen > 0)
-	{
-		char buf[150];
-		udp->read(buf,msglen);
+	int status = jsonParse((char*) payload, &endptr, &value, allocator);
+	if (status != JSON_OK) {
+		Debug::Error(std::string("Unable to parse JSON: ") + jsonStrError(status)) ;
+		return;
+	}    
 
-		Debug::Info("Got: " + std::string(buf, msglen));
 
-		if (ChannelSerializer::parseMessage(buf,msglen,this))
-		{
-			//Debug::Info("Setting channel/value:");
-			//Debug::Info(String(ChannelSerializer::channelName.c_str()));
-			//Debug::Info(String(ChannelSerializer::value));
-			setOutput(ChannelSerializer::channelName,ChannelSerializer::value);
-		}
-
-		msglen = udp->available();
+	if (value.getTag() != JSON_OBJECT){
+		Debug::Error("message is wrong type");
+		return;
 	}
+
+	std::string channelName;
+	SOCKETTYPE channelValue;
+	bool chset =false, valset=false;
+
+	for (auto i : value) 
+	{
+        if (!strcmp("ch",i->key))	
+		{
+			channelName = std::string(i->value.toString());
+			if (!channelExists(channelName))
+			{
+				//Debug::Error("channel does not exist");
+				return;
+			}
+			chset = true;
+		}
+		else if (!strcmp("val",i->key))	
+		{
+			valset=true;
+			channelValue = i->value.toNumber();
+		}
+    }
+
+	
+
+	if (!chset || !valset)
+		return;
+		
+	//Debug::Info("Setting " + channelName + " to" + std::to_string(channelValue));
+	setOutput(channelName,channelValue);
+
 }
-*/
+
+int AbstractProxyNode::createMessage(char* buf, std::string socketname, SOCKETTYPE value)
+{
+	return sprintf(buf, "{\"ch\":\"%s\",\"val\":" SOCKETTYPETOSTR "}", socketname.c_str(), value);
+}
+
+inline bool AbstractProxyNode::channelExists(std::string channel)
+{
+  return GetOutputSocket(channel)!=0;
+}

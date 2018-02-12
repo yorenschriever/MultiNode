@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 #include "../../../src/networking/IWebsocket.h"
-#include "../../../lib/arduinoWebSockets/src/WebSocketsServer.h"
+#include "../lib/arduinoWebSockets/src/WebSocketsServer.h"
 
 
 class WebsocketESP : public IWebsocket

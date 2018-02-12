@@ -8,7 +8,7 @@
 #include "../src/nodes/ProcessNode.h"
 
 #include "../lib/gason/gason.h"
-#include "command.h"
+#include "Command.h"
 
 /**
  * The workhorse of the ui.
