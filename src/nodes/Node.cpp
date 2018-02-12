@@ -53,9 +53,11 @@ InputSocket* Node::GetInputSocket(std::string name){
 	return InputSockets[name];
 }
 
-void Node::CreateInputSocket(std::string name, SocketDrive drive, SOCKETTYPE defaultvalue)
+InputSocket* Node::CreateInputSocket(std::string name, SocketDrive drive, SOCKETTYPE defaultvalue)
 {
-	InputSockets[name] = new InputSocket(this,name,drive,defaultvalue);
+	InputSocket* sock = new InputSocket(this,name,drive,defaultvalue);
+	InputSockets[name] = sock;
+	return sock;
 }
 
 void Node::DeleteInputSocket(std::string name)

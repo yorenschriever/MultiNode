@@ -25,7 +25,7 @@ LFONode circrad;
 
 
 //pointer to the top node, so we can easily switch the render order
-RenderNode* topNode = &rect2;
+GraphicsNode* topNode = &rect2;
 
 void setupLFO(LFONode* lfo, float period, float amplitude, float offset, InputSocket* socket)
 {

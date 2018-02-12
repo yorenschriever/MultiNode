@@ -1,10 +1,10 @@
 #ifndef SHAPENODE_H
 #define SHAPENODE_H
 
-#include "RenderNode.h"
+#include "GraphicsNode.h"
 #include "../types.h"
 
-class ShapeNode : public RenderNode 
+class ShapeNode : public GraphicsNode 
 {
 	public:
 		RGBA Color;

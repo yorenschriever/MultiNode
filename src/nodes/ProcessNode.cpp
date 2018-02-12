@@ -20,12 +20,14 @@ OutputSocket* ProcessNode::GetOutputSocket(std::string name){
 	return OutputSockets[name];
 }
 
-void ProcessNode::CreateOutputSocket(std::string name, SocketDrive drive)
+OutputSocket* ProcessNode::CreateOutputSocket(std::string name, SocketDrive drive)
 {
-	OutputSockets[name] = new OutputSocket(this,name,drive);
+	OutputSocket* sock = new OutputSocket(this,name,drive);
+	OutputSockets[name] = sock;
 
 	Debug::Info("Create outputsocket: " + name);
 	//Debug::Error(String("Output socket count: ") + String(OutputSockets.size()));
+	return sock;
 }
 
 void ProcessNode::DeleteOutputSocket(std::string name)

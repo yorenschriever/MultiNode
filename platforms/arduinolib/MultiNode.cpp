@@ -9,7 +9,7 @@
 #include "../../src/nodes/ProcessNodes.cpp"
 #include "../../src/nodes/AbstractProxyNode.cpp"
 #include "../../src/nodes/ProxyNode.cpp"
-#include "../../src/nodes/RenderNode.cpp"
+#include "../../src/nodes/GraphicsNode.cpp"
 #include "../../src/nodes/ShapeNode.cpp"
 #include "../../src/nodes/ShapeNodes.cpp"
 #include "../../src/nodes/WebsocketProxyNode.cpp"

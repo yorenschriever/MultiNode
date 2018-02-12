@@ -10,6 +10,9 @@ class SumNode : public ProcessNode
 		~SumNode();
 	protected:
 		virtual void ProcessInternal(Socket* caller);
+		InputSocket* ptrA;
+		InputSocket* ptrB;
+		OutputSocket* ptrC;
 };
 
 class ToggleNode : public ProcessNode
@@ -31,6 +34,12 @@ class LFONode : public ProcessNode
 		~LFONode();
 	protected:
 		virtual void ProcessInternal(Socket* caller);
+
+		InputSocket* ptrPeriod;
+		InputSocket* ptrAmplitude;
+		InputSocket* ptrOffset;
+		OutputSocket* ptrValue;
+
 };
 
 

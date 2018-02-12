@@ -19,7 +19,7 @@ LFONode circrad;
 
 
 //pointer to the top node, so we can easily switch the render order
-RenderNode* topNode = &rect2;
+GraphicsNode* topNode = &rect2;
 
 void setupLFO(LFONode* lfo, float period, float amplitude, float offset, InputSocket* socket)
 {
@@ -69,12 +69,21 @@ void setup() {
   Serial.println("Shapes defined");
 }
 
+unsigned long starttime;
+int frames;
+
 void loop() {
 
   NodeManager::AutoProcess();
   UpdateLeds();
-  
-  Serial.println("frame");
+  frames++;
+
+  if (millis() > starttime + 1000)
+  {
+    Serial.printf("FPS: %d", frames);
+    frames=0;
+    starttime=millis();
+  }
 }
 
 

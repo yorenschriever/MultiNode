@@ -1,5 +1,5 @@
-#ifndef RENDERNODE_H
-#define RENDERNODE_H
+#ifndef GRAPHICSNODE_H
+#define GRAPHICSNODE_H
 
 #include "Node.h"
 
@@ -8,21 +8,21 @@
  but are able to generate pixel data  
  */
 
-class RenderNode : public Node
+class GraphicsNode : public Node
 {
 	public:
-		RenderNode();
-		RenderNode* UnderlyingNode=0; 	
+		GraphicsNode();
+		GraphicsNode* UnderlyingNode=0; 	
 		virtual RGBA GetStackedColor(Position p);
 	protected:
 		//i do it this way, so i can support bitmaps and non-linear blending with layers below (like blurry glass)
 		virtual RGBA colorAt(Position p)=0; 
 
-		//since all rendernodes will probably support rotation and translation (position), it is implemented here.
+		//since all GraphicsNodes will probably support rotation and translation (position), it is implemented here.
 		//can be used in intersect()
 		void applyPositionAndTranslation(Position* p);
 
-		void ProcessInternal(Socket* caller) {}; //rendernode do not process 
+		void ProcessInternal(Socket* caller) {}; //GraphicsNode do not process 
 };
 
 #endif

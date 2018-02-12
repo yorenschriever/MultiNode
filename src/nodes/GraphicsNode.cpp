@@ -1,15 +1,15 @@
 
-#include "RenderNode.h"
+#include "GraphicsNode.h"
 #include "../types.h"
 
-RenderNode::RenderNode()
+GraphicsNode::GraphicsNode()
 {
 	CreateInputSocket("x",Pull,0);
 	CreateInputSocket("y",Pull,0);
 	CreateInputSocket("rot",Pull,0);
 }
 
-RGBA RenderNode::GetStackedColor(Position p){
+RGBA GraphicsNode::GetStackedColor(Position p){
 	RGBA thisLayerColor = colorAt(p);
 
 	if (thisLayerColor.a==1) return thisLayerColor;
@@ -32,7 +32,7 @@ RGBA RenderNode::GetStackedColor(Position p){
 	return result;
 }
 
-void RenderNode::applyPositionAndTranslation(Position* p)
+void GraphicsNode::applyPositionAndTranslation(Position* p)
 {
 	//We want to apply rotation first, then translation.
 	//But since the rotate the 'camera' instead of the object itself,

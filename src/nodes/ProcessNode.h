@@ -15,7 +15,7 @@ class ProcessNode : public Node
 		void setOutput(std::string name, SOCKETTYPE value);
 		void setOutput(std::string name, SOCKETTYPE value, bool force); //if force is set to true, it will still send an update, even if the value has not changed
 
-		void CreateOutputSocket(std::string name, SocketDrive drive);
+		OutputSocket* CreateOutputSocket(std::string name, SocketDrive drive);
 		void DeleteOutputSocket(std::string name);
 
 	private:

@@ -1,10 +1,10 @@
 #ifndef ANTIALIASNODE_H
 #define ANTIALIASNODE_H
 
-#include "RenderNode.h"
+#include "GraphicsNode.h"
 #include "../types.h"
 
-class AntiAliasNode : public RenderNode
+class AntiAliasNode : public GraphicsNode
 {
 	public:
 		AntiAliasNode();

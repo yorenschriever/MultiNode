@@ -33,7 +33,7 @@ class Node
 	protected:
 		virtual void ProcessInternal(Socket* caller)=0; //TODO only processnodes can have this
 		SOCKETTYPE getInput(std::string name);
-		void CreateInputSocket(std::string name, SocketDrive drive, SOCKETTYPE defaultValue);
+		InputSocket* CreateInputSocket(std::string name, SocketDrive drive, SOCKETTYPE defaultValue);
 		void DeleteInputSocket(std::string name);
 
 	private:

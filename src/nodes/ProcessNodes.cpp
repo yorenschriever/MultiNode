@@ -3,11 +3,14 @@
 #include "../Debug.h"
 #include <math.h>
 
+#include "../sockets/InputSocket.h"
+#include "../sockets/OutputSocket.h"
+
 SumNode::SumNode(){
 	Title="Sum";
-	CreateInputSocket("A",Pull,0);
-	CreateInputSocket("B",Pull,0);
-	CreateOutputSocket("C",Pull);
+	ptrA = CreateInputSocket("A",Pull,0); 
+	ptrB = CreateInputSocket("B",Pull,0);
+	ptrC = CreateOutputSocket("C",Pull); 
 }
 
 SumNode::~SumNode(){
@@ -15,7 +18,12 @@ SumNode::~SumNode(){
 
 void SumNode::ProcessInternal(Socket* caller)
 {
-	setOutput("C",getInput("A")+getInput("B"));
+	//This method works for a variable number of sockets
+	//setOutput("C",getInput("A")+getInput("B"));
+
+	//but when the number of sockets is fixed, performance 
+	//can be increased 5-fold by using pointers
+	ptrC->SetValue(ptrA->GetValue() + ptrB->GetValue());
 }
 
 
@@ -46,10 +54,10 @@ void ToggleNode::ProcessInternal(Socket* caller)
 
 LFONode::LFONode(){
 	Title="LFO";
-	CreateInputSocket("Period",Pull,1);
-	CreateInputSocket("Amplitude",Pull,0);
-	CreateInputSocket("Offset",Pull,0);
-	CreateOutputSocket("Value",Pull);
+	ptrPeriod = CreateInputSocket("Period",Pull,1);
+	ptrAmplitude = CreateInputSocket("Amplitude",Pull,0);
+	ptrOffset = CreateInputSocket("Offset",Pull,0);
+	ptrValue = CreateOutputSocket("Value",Pull);
 }
 
 LFONode::~LFONode(){
@@ -57,11 +65,15 @@ LFONode::~LFONode(){
 
 void LFONode::ProcessInternal(Socket* caller)
 {
-	SOCKETTYPE period = getInput("Period");
+	SOCKETTYPE period = ptrPeriod->GetValue(); //getInput("Period");
 	if (period==0)
 		return;
 
+	//why is this faster than the pointer impl?
 	setOutput("Value",getInput("Offset")+getInput("Amplitude") * sin((float)Time::Millis() /1000.0 * 2*3.141592658 / period));
+	/*ptrValue->SetValue(
+		ptrOffset->GetValue() + ptrAmplitude->GetValue() * sin((float)Time::Millis() /1000.0 * 2*3.141592658 / period)
+	);*/
 }
 
 
