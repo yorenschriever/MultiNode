@@ -65,6 +65,13 @@ function removeConnector(line){
   $(line).remove();
 }
 
+function removeAllConnectors()
+{
+  $("#connector_canvas").children("line").each(function (element) {
+    removeConnector(this);
+  });
+}
+
 function createConnector(anchor1, anchor2)
 {
   var connector = $('#connector_canvas');
@@ -82,6 +89,8 @@ function createConnector(anchor1, anchor2)
   positionConnector(cur_con);
 }
 
+window.removeAllConnectors = removeAllConnectors;
+window.removeConnector = removeConnector;
 window.createConnector = createConnector;
 
 //code to move the nodes around
@@ -98,7 +107,10 @@ $('.node').draggable({
         positionConnector($(anchor).data('line'));
       }
     });
-
+ 
+  },
+  stop: function(event, ui ){
+    //console.log("dropped");
     window.uploadMove(this.getAttribute("bid"),ui.position.left,ui.position.top)
   }
 });

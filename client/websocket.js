@@ -1,6 +1,6 @@
 
 
-var exampleSocket = new WebSocket("ws://192.168.1.144:81", "MultiNode");
+var exampleSocket = new WebSocket("ws://192.168.1.184:81", "MultiNode");
 
 exampleSocket.onopen = function (event) {
     exampleSocket.send('{"cmd": "GetAll"}'); 
@@ -12,11 +12,17 @@ var nodes = {};
 exampleSocket.onmessage = function(event) {
     var parsed = JSON.parse( event.data);
 
+    console.log("incoming message", parsed);
+
     if (parsed.node)
         addNode(parsed.node)
 
     if (parsed.initconn)
+    {
+
+        removeAllNodeConnections();
         drawNodeConnections();
+    }
 
         
 
@@ -29,27 +35,47 @@ function addNode(node)
     {
         nodes[node.id] = {
             node: node, 
-            element: createNodeElement()
+            element: createNodeElement(node.id)
         }
+        drawNode(nodes[node.id].node, nodes[node.id].element); 
     }
+    
 
-    drawNode(nodes[node.id].node, nodes[node.id].element); 
+    $(nodes[node.id].element).css({top: node.y, left: node.x});
 
+    removeAllNodeConnections();
+    drawNodeConnections();
+
+    
+}
+
+/*function removeConnectionsFromNode(el)
+{
+
+}*/
+
+function removeAllNodeConnections()
+{
+    window.removeAllConnectors();
+}
+
+function drawInputConnectionsForNode(node)
+{
+    if (node.inputs)
+    {
+        node.inputs.forEach(function(inp){
+            if (inp.connected)
+            {
+                drawConnection(node.id, inp.name, inp.connected.id, inp.connected.sock);
+            }
+        });
+    }
 }
 
 function drawNodeConnections()
 {
     Object.values(nodes).forEach(function(node2){
-        var node = node2.node;
-        if (node.inputs)
-        {
-            node.inputs.forEach(function(inp){
-                if (inp.connected)
-                {
-                    drawConnection(node.id, inp.name, inp.connected.id, inp.connected.sock);
-                }
-            });
-        }
+        drawInputConnectionsForNode(node2.node);
     });
 }
 
@@ -65,16 +91,21 @@ function drawConnection(ida, socka, idb, sockb)
         $("#sock_" + idb + "_" + sockb).children(".con_anchor") )
 }
 
-function createNodeElement()
+function createNodeElement(id)
 {
     var nodeel = document.createElement("div"); 
+
+    nodeel.setAttribute('bid', id);
+    nodeel.setAttribute('class',"node ui-item item-1")
+
     document.getElementById("canvas").appendChild(nodeel); 
     return nodeel;
 }
 
 function drawNode(node, element)
 {
-    html =  '<div class="node ui-item item-1" bid=' + node.id + '>';
+    //html =  '<div class="node ui-item item-1" bid=' + node.id + '>';
+    html="";
     html += '<div class="node_title">' + node.title + '</div>'
     html += '<div class="sockets_in">';
     if (node.inputs!=undefined)
@@ -104,10 +135,10 @@ function drawNode(node, element)
 
 
     html += '<div class="socket_end"></div> ';
-    html += '</div>';
+    //html += '</div>';
 
     
-    element.outerHTML = html;
+    element.innerHTML = html;
 }
 
 function uploadMove(id, x, y, force=false)
@@ -118,7 +149,7 @@ function uploadMove(id, x, y, force=false)
 
     content = JSON.stringify({cmd: "Move", params : {
         id: id,
-        x: y,
+        x: x,
         y: y
     }});
                 
