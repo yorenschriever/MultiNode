@@ -97,6 +97,7 @@ std::string Value::AsString()
     return std::to_string(*((int*) dataptr));
   else if (type==ValueNumber)
     return std::to_string(*((float*) dataptr));
+  return "";
 }
 
 bool Value::AsBoolean()
@@ -111,6 +112,7 @@ bool Value::AsBoolean()
     return *((float*) dataptr) != 0;
   else if (type==ValueString)
     return (!strcmp("1", (char*) dataptr) || !strcmp("True",(char*) dataptr)  || !strcmp("true",(char*) dataptr)); 
+  return false;
 }
 
 int Value::AsIndex()
@@ -125,6 +127,7 @@ int Value::AsIndex()
     return *((float*) dataptr);
   else if (type==ValueString)
     return atoi((const char*) dataptr);
+  return 0;
 }
 
 float Value::AsNumber()
@@ -139,4 +142,5 @@ float Value::AsNumber()
     return *((float*) dataptr);
   else if (type==ValueString)
     return atof((const char*) dataptr);
+  return 0;
 }

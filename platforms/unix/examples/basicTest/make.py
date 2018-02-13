@@ -42,7 +42,7 @@ TARGETDIR = "bin"
 TARGET = "application"
 
 addSources("../../../../src",    "obj/MultiNode")
-#addSources("../../../../lib",    "obj/lib")
+addSources("../../../../lib",    "obj/lib")
 addSources("../../implementations", "obj/implementations")
 addSources(".", "obj")
 

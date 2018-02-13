@@ -3,6 +3,7 @@
 #include "../NodeManager.h"
 
 #include "../networking/IUDPSocketFactory.h"
+#include "../sockets/OutputSocket.h"
 #include "../../lib/gason/gason.h"
 
 AbstractProxyNode::AbstractProxyNode(){

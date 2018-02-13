@@ -1,7 +1,7 @@
 #ifndef ABSTRACTPROXYNODE_H
 #define ABSTRACTPROXYNODE_H
 
-#include "ProcessNode.h"
+#include "Node.h"
 #include "../networking/UDPWrapper.h"
 #include "../networking/UDPWrapperFactory.h"
 #include "../sockets/Socket.h"
@@ -86,7 +86,7 @@ notes:
 
 */
 
-class AbstractProxyNode : public ProcessNode
+class AbstractProxyNode : public Node
 {
 	public: 
 		AbstractProxyNode();

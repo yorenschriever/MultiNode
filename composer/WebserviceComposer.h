@@ -5,7 +5,7 @@
 #include "../src/networking/IWebsocketFactory.h"
 
 #include "../src/nodes/Node.h"
-#include "../src/nodes/ProcessNode.h"
+//#include "../src/nodes/ProcessNode.h"
 
 #include "../lib/gason/gason.h"
 #include "Command.h"
@@ -26,6 +26,11 @@ class WebserviceComposer{
         void loop();
 
         void Move(int id, int x, int y);
+        void SetTitle(int id, std::string title);
+        void SetValue(int id, std::string inputsocket, SOCKETTYPE val);
+        void Disconnect(int id, std::string inputsocket);
+        void Connect(int idinp, std::string inputsocket, int idout, std::string outputsocket);
+
         void SendAllNodesToClient();
         void SendNodeToClient(Node* node);
     private:

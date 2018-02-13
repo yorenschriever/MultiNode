@@ -6,8 +6,9 @@
 
 #include "../src/networking/IWebsocket.h"
 #include <string.h>
-#include "../src/nodes/ProcessNode.h"
+#include "../src/nodes/Node.h"
 #include "../src/NodeManager.h"
+#include "../src/sockets/InputSocket.h"
 
 using namespace std::placeholders;
 
@@ -45,6 +46,10 @@ void WebserviceComposer::handleMsg(uint8_t num, uint8_t * payload, size_t length
             comm.params["x"].AsIndex(),
             comm.params["y"].AsIndex());
     
+    if (!strcmp("Title",comm.name))
+        SetTitle(
+            comm.params[std::string("id")].AsIndex(), 
+            comm.params["title"].AsString());
 
 }
 
@@ -113,6 +118,71 @@ void WebserviceComposer::Move(int id, int x, int y)
     node->y = y;
 
     SendNodeToClient(node);
+}
+
+void WebserviceComposer::SetTitle(int id, std::string title)
+{
+    Node* node = NodeManager::GetNode(id);
+    if (node==0)
+        return;
+
+    node->Title = title;
+
+    SendNodeToClient(node);
+}
+
+void WebserviceComposer::SetValue(int id, std::string inputsocket, SOCKETTYPE val)
+{
+    Node* node = NodeManager::GetNode(id);
+    if (node==0)
+        return;
+
+    InputSocket* sock = node->GetInputSocket(inputsocket);
+    if (sock==0)
+        return;
+
+    sock->SetValue(val);
+
+    SendNodeToClient(node);
+}
+
+void WebserviceComposer::Disconnect(int id, std::string inputsocket)
+{
+    Node* node = NodeManager::GetNode(id);
+    if (node==0)
+        return;
+
+    InputSocket* sock = node->GetInputSocket(inputsocket);
+    if (sock==0)
+        return;
+
+    sock->Disconnect();
+
+    SendNodeToClient(node);
+}
+
+
+void WebserviceComposer::Connect(int idinp, std::string inputsocket, int idout, std::string outputsocket)
+{
+    Node* nodeinp = NodeManager::GetNode(idinp);
+    if (nodeinp==0)
+        return;
+
+    InputSocket* sockinp = nodeinp->GetInputSocket(inputsocket);
+    if (sockinp==0)
+        return;
+
+    Node* nodeout = NodeManager::GetNode(idout);
+    if (nodeout==0)
+        return;
+
+    OutputSocket* sockout = nodeout->GetOutputSocket(outputsocket);
+    if (sockout==0)
+        return;
+
+    sockinp->Connect((Socket*)sockout);
+
+    SendNodeToClient(nodeinp);
 }
 
 void WebserviceComposer::SendAllNodesToClient()

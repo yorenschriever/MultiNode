@@ -24,7 +24,11 @@ class Node
 
 		InputSocket* GetInputSocket(std::string name);
 		std::map<std::string, InputSocket*>* GetInputSockets();
-		virtual std::map<std::string, OutputSocket*>* GetOutputSockets(){return 0;} //TODO this is done to the ui can access the outputsockets. fix this is a neat way.
+
+		OutputSocket* GetOutputSocket(std::string name);
+		std::map<std::string, OutputSocket*>* GetOutputSockets();
+
+		//virtual std::map<std::string, OutputSocket*>* GetOutputSockets(){return 0;} //TODO this is done to the ui can access the outputsockets. fix this is a neat way.
 
 //#ifdef WITHCOMPOSER
 		int x,y;
@@ -36,8 +40,16 @@ class Node
 		InputSocket* CreateInputSocket(std::string name, SocketDrive drive, SOCKETTYPE defaultValue);
 		void DeleteInputSocket(std::string name);
 
+		void setOutput(std::string name, SOCKETTYPE value);
+		void setOutput(std::string name, SOCKETTYPE value, bool force); //if force is set to true, it will still send an update, even if the value has not changed
+
+		OutputSocket* CreateOutputSocket(std::string name, SocketDrive drive);
+		void DeleteOutputSocket(std::string name);
+
 	private:
 		std::map<std::string, InputSocket*> InputSockets;
+		std::map<std::string, OutputSocket*> OutputSockets;
+		
 		unsigned int frameNumber=-1;
 };
 

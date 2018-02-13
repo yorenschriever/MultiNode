@@ -4,7 +4,7 @@
 #include "Arduino.h" //must be on top
 #include "MultiNode.h"
 
-class PinInputNode : public ProcessNode {
+class PinInputNode : public Node {
 	public: 
 		PinInputNode(int pin);
 		~PinInputNode();
@@ -15,7 +15,7 @@ class PinInputNode : public ProcessNode {
 };
 
 
-class PinOutputNode : public ProcessNode {
+class PinOutputNode : public Node {
 	public: 
 		PinOutputNode(int pin);
 		~PinOutputNode();

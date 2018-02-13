@@ -1,9 +1,11 @@
 #ifndef PROCESSNODES_H
 #define PROCESSNODES_H
 
-#include "ProcessNode.h"
+#include "Node.h"
+#include "../sockets/InputSocket.h"
+#include "../sockets/OutputSocket.h"
 
-class SumNode : public ProcessNode
+class SumNode : public Node
 {
 	public: 
 		SumNode();
@@ -15,7 +17,7 @@ class SumNode : public ProcessNode
 		OutputSocket* ptrC;
 };
 
-class ToggleNode : public ProcessNode
+class ToggleNode : public Node
 {
 	public: 
 		ToggleNode();
@@ -27,7 +29,7 @@ class ToggleNode : public ProcessNode
 };
 
 
-class LFONode : public ProcessNode
+class LFONode : public Node
 {
 	public: 
 		LFONode();
@@ -43,7 +45,7 @@ class LFONode : public ProcessNode
 };
 
 
-class TimeNode : public ProcessNode
+class TimeNode : public Node
 {
 	public: 
 		TimeNode();

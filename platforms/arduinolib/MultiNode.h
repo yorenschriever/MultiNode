@@ -1,6 +1,6 @@
 #include "Arduino.h"
 
-
+#include "../../src/nodes/Node.h"
 #include "../../src/nodes/ProcessNodes.h"
 #include "../../src/nodes/ShapeNodes.h"
 
