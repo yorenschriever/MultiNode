@@ -34,5 +34,3 @@ void InputSocket::SetValue(SOCKETTYPE value){
 	if (drive==Push)
 		GetNode()->Process(this);
 }
-
-

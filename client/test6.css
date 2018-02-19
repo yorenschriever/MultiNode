@@ -169,3 +169,14 @@ div {
   text-align: center;
   font-size: 1.2em;
 }
+
+
+.socketInput
+{
+  position:absolute;
+}
+
+.socketval
+{
+  width: 40px;
+}

@@ -42,14 +42,34 @@ void WebserviceComposer::handleMsg(uint8_t num, uint8_t * payload, size_t length
 
     if (!strcmp("Move",comm.name))
         Move(
-            comm.params[std::string("id")].AsIndex(), 
+            comm.params["id"].AsIndex(), 
             comm.params["x"].AsIndex(),
             comm.params["y"].AsIndex());
     
     if (!strcmp("Title",comm.name))
         SetTitle(
-            comm.params[std::string("id")].AsIndex(), 
+            comm.params["id"].AsIndex(), 
             comm.params["title"].AsString());
+
+    if (!strcmp("Value",comm.name))
+        SetValue(
+            comm.params["id"].AsIndex(), 
+            comm.params["sock"].AsString(),
+            comm.params["val"].AsNumber());
+
+    if (!strcmp("Connect",comm.name))
+        Connect(
+            comm.params["idin"].AsIndex(), 
+            comm.params["sockin"].AsString(),
+            comm.params["idout"].AsIndex(), 
+            comm.params["sockout"].AsString());
+
+    if (!strcmp("Disconnect",comm.name))
+        Disconnect(
+            comm.params["id"].AsIndex(), 
+            comm.params["sock"].AsString());
+
+
 
 }
 
@@ -156,9 +176,16 @@ void WebserviceComposer::Disconnect(int id, std::string inputsocket)
     if (sock==0)
         return;
 
+    Socket* othersocket = sock->GetConnectedSocket();
+    if (othersocket==0)
+        return;
+
+    Node* otherNode = othersocket->GetNode();
+
     sock->Disconnect();
 
     SendNodeToClient(node);
+    SendNodeToClient(otherNode);
 }
 
 
@@ -229,6 +256,8 @@ std::string WebserviceComposer::serializeInputSockets(std::map<std::string, Inpu
         Socket* conn = it->second->GetConnectedSocket();
         if (conn !=0)
             results += ",\"connected\": {\"id\": " + std::to_string(conn->GetNode()->id) + ",\"sock\": \"" + conn->Name + "\"}";
+        else
+            results += ",\"value\": " + std::to_string(it->second->GetValue()) + "";
 
         results += "}";
     }

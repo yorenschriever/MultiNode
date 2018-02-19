@@ -59,6 +59,12 @@ function positionConnector(line){
          .attr('y2', y2);
 }
 
+function disconnect(line, node, socket)
+{
+  removeConnector(line)
+  window.UploadDisconnect(node, socket);
+}
+
 function removeConnector(line){
   $(line).data('anchor1').data('line',null);
   $(line).data('anchor2').data('line',null);
@@ -71,6 +77,15 @@ function removeAllConnectors()
     removeConnector(this);
   });
 }
+
+function UpdateInputValue(id, socket, val)
+{
+  var el = $(".input_" + id + "_" + socket);
+  //var el = document.getElementById("input_" + id + "_" + socket);
+  if (el!=undefined)
+    $(el).children("input").val(val)
+}
+window.UpdateInputValue = UpdateInputValue;
 
 function createConnector(anchor1, anchor2)
 {
@@ -137,6 +152,16 @@ $('.socket_in .con_anchor').droppable({
     positionConnector(line);
 
     //nb: the ghost is moved back to 0,0 by draggable{stop:}
+
+    //upload the new connection
+
+    var idin = $(this).parents(".node").attr("bid");
+    var socketin = $(this).siblings(".socket_title").text();
+
+    var idout = $(line).data('anchor1').parents(".node").attr("bid");
+    var socketout = $(line).data('anchor1').siblings(".socket_title").text();
+
+    window.UploadConnect(idin, socketin, idout, socketout);
   }
 });
 
@@ -163,15 +188,63 @@ $('.con_anchor_ghost').draggable({
       left: 0
     });
 
-  }
-});
+    }
+  });
 
-$('.con_anchor_ghost').on('mousedown', function(e) {
-  var anchor = $(this).parent().children('.con_anchor'); //the anchor in the node that doesnt move
-  var anchor_ghost = $(this); //the ghost anchor that is dragged around
+  $('.con_anchor_ghost').on('mousedown', function(e) {
+    var anchor = $(this).parent().children('.con_anchor'); //the anchor in the node that doesnt move
+    var anchor_ghost = $(this); //the ghost anchor that is dragged around
 
-  createConnector(anchor, anchor_ghost);
+    createConnector(anchor, anchor_ghost);
 
-});
+  });
+
+  $('.socket_in .con_anchor').dblclick(function(arg)
+  {
+    console.log("dbl click",arg );  
+
+    console.log ("line",$(this).data('line'));
+
+    var id = $(this).parents(".node").attr("bid");
+    var socket = $(this).siblings(".socket_title").text();
+
+    if ($(this).data('line') != undefined)
+    {
+      disconnect($(this).data('line'), id, socket);
+    }
+
+    var inpel = document.createElement("div"); 
+
+    //nodeel.setAttribute('bid', id);
+    inpel.setAttribute('class',"socketInput" + " input_" + id + "_" + socket)
+    //inpel.setAttribute('id',"input_" + id + "_" + socket);
+    //inpel.id = "input_" + id + "_" + socket;
+    $(inpel).css({top: arg.clientY, left: arg.clientX});    
+    
+    var val = $(this).attr("val");
+    if (val==undefined)
+      val="";
+
+    inpel.innerHTML = "<input value=\""+ val +"\" class=\"socketval\" />";
+
+    document.getElementById("canvas").appendChild(inpel); 
+
+    $(inpel).children("input")
+      .focus()
+      .change(function(){
+
+        var value = $(this).val();;
+        console.log("change", id, socket, value);
+
+        UploadValue(id, socket, value);
+        $(this).remove();
+      })
+      .blur(function(){
+        $(this).remove();
+      });
+
+  })
+
+
 
 }

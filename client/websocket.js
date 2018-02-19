@@ -25,7 +25,9 @@ exampleSocket.onmessage = function(event) {
     }
 
         
-
+    //todo, this will bind a lot of events multiple times,
+    //for example socket ondblclick.
+    //change this to only add events to the changed/newly generated node
     window.onload();
 };
 
@@ -37,10 +39,12 @@ function addNode(node)
             node: node, 
             element: createNodeElement(node.id)
         }
-        drawNode(nodes[node.id].node, nodes[node.id].element); 
+        
+    } else {
+        nodes[node.id].node = node;
     }
     
-
+    drawNode(nodes[node.id].node, nodes[node.id].element); 
     $(nodes[node.id].element).css({top: node.y, left: node.x});
 
     removeAllNodeConnections();
@@ -110,12 +114,14 @@ function drawNode(node, element)
     html += '<div class="sockets_in">';
     if (node.inputs!=undefined)
     {
-        
         node.inputs.forEach(function(sock) { 
+            console.log("creating socket", sock.name, sock.value)
             html += '<div class="socket_in" id="sock_' + node.id + '_' + sock.name +'">';
-            html += '  <div class="con_anchor"></div>';
+            html += '  <div class="con_anchor" val="'+sock.value+'" ></div>';
             html += '  <div class="socket_title">' + sock.name + '</div>';
             html += '</div>';
+
+            UpdateInputValue(node.id, sock.name, sock.value);
         })
         
     }
@@ -143,8 +149,6 @@ function drawNode(node, element)
 
 function uploadMove(id, x, y, force=false)
 {
-    //todo throttle 
-
     console.log("moving ", id, x, y);
 
     content = JSON.stringify({cmd: "Move", params : {
@@ -157,3 +161,48 @@ function uploadMove(id, x, y, force=false)
     exampleSocket.send(content); 
 }
 window.uploadMove = uploadMove;
+
+function UploadValue(id, socket, value)
+{
+    console.log("Set value ", id, socket, value);
+
+    content = JSON.stringify({cmd: "Value", params : {
+        id: id,
+        sock: socket,
+        val: value
+    }});
+                
+    console.log(content);
+    exampleSocket.send(content); 
+}
+window.UploadValue = UploadValue;
+
+function UploadConnect(nodein, sockin, nodeout, sockout)
+{
+    console.log("Connecting ", nodein, sockin, nodeout, sockout);
+
+    content = JSON.stringify({cmd: "Connect", params : {
+        idin: nodein,
+        sockin: sockin,
+        idout: nodeout,
+        sockout: sockout
+    }});
+                
+    console.log(content);
+    exampleSocket.send(content); 
+}
+window.UploadConnect = UploadConnect;
+
+function UploadDisconnect(node, sock)
+{
+    console.log("Disconnecting ", node, sock);
+
+    content = JSON.stringify({cmd: "Disconnect", params : {
+        id: node, 
+        sock: sock,
+    }});
+                
+    console.log(content);
+    exampleSocket.send(content); 
+}
+window.UploadDisconnect = UploadDisconnect;
