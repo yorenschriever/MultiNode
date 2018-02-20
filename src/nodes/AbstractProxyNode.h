@@ -90,7 +90,7 @@ class AbstractProxyNode : public Node
 {
 	public: 
 		AbstractProxyNode();
-		~AbstractProxyNode();
+		virtual ~AbstractProxyNode(){};
 
 		void CreateTransmitter(std::string Name);
 		void CreateReceiver(std::string Name);

@@ -9,6 +9,7 @@ class ProxyNode : public AbstractProxyNode
 {
     public:
         ProxyNode(); 
+        ~ProxyNode(){};
 };
 
 #endif

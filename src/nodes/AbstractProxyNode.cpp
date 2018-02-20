@@ -10,7 +10,7 @@ AbstractProxyNode::AbstractProxyNode(){
 	Title="ProxyNode";
 	NodeManager::AutoProcessNode(this);
 }
-AbstractProxyNode::~AbstractProxyNode(){}
+//AbstractProxyNode::~AbstractProxyNode(){}
 
 void setCommunicationObject(uint16_t port){}
 

@@ -9,6 +9,7 @@ class WebsocketProxyNode : public AbstractProxyNode
 {
     public:
         WebsocketProxyNode(); 
+        ~WebsocketProxyNode(){};
 };
 
 #endif

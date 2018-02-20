@@ -6,11 +6,19 @@
 #include "../sockets/OutputSocket.h"
 
 Node::Node(){
-  NodeManager::AddNode(this);
+	NodeManager::AddNode(this);
 }
 
 Node::~Node(){
-  NodeManager::RemoveNode(this);
+	NodeManager::RemoveNode(this);
+
+	//delete (and disconnect) outputsockets first, so this node cant process when deleting the input sockets
+	for (std::map<std::string,OutputSocket*>::iterator it=OutputSockets.begin(); it!=OutputSockets.end(); ++it)
+		DeleteOutputSocket(it->first);
+
+	//delete all inputsockets
+	for (std::map<std::string,InputSocket*>::iterator it=InputSockets.begin(); it!=InputSockets.end(); ++it)
+		DeleteInputSocket(it->first);
 }
 
 //this process method is being called from the nodemanager.autoprocess
@@ -62,7 +70,12 @@ InputSocket* Node::CreateInputSocket(std::string name, SocketDrive drive, SOCKET
 
 void Node::DeleteInputSocket(std::string name)
 {
-	delete InputSockets[name];
+	InputSocket* sock = GetInputSocket(name);
+	if (sock==0)
+		return;
+
+	sock->Disconnect();
+	delete sock;
 	InputSockets.erase(name);
 }
 
@@ -106,7 +119,12 @@ OutputSocket* Node::CreateOutputSocket(std::string name, SocketDrive drive)
 
 void Node::DeleteOutputSocket(std::string name)
 {
-	delete OutputSockets[name];
+	OutputSocket* sock = GetOutputSocket(name);
+	if (sock==0)
+		return;
+		
+	sock->Disconnect();
+	delete sock;
 	OutputSockets.erase(name);
 }
 

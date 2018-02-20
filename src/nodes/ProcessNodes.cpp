@@ -14,8 +14,7 @@ SumNode::SumNode(){
 	ptrC = CreateOutputSocket("C",Pull); 
 }
 
-SumNode::~SumNode(){
-}
+//SumNode::~SumNode(){}
 
 void SumNode::ProcessInternal(Socket* caller)
 {
@@ -36,8 +35,7 @@ ToggleNode::ToggleNode(){
 	Title = "ToggleNode";
 }
 
-ToggleNode::~ToggleNode(){
-}
+//ToggleNode::~ToggleNode(){}
 
 void ToggleNode::ProcessInternal(Socket* caller)
 {
@@ -61,8 +59,7 @@ LFONode::LFONode(){
 	ptrValue = CreateOutputSocket("Value",Pull);
 }
 
-LFONode::~LFONode(){
-}
+//LFONode::~LFONode(){}
 
 void LFONode::ProcessInternal(Socket* caller)
 {
@@ -86,8 +83,7 @@ TimeNode::TimeNode(){
 	CreateOutputSocket("Value",Pull);
 }
 
-TimeNode::~TimeNode(){
-}
+//TimeNode::~TimeNode(){}
 
 void TimeNode::ProcessInternal(Socket* caller)
 {

@@ -8,6 +8,7 @@ class AntiAliasNode : public GraphicsNode
 {
 	public:
 		AntiAliasNode();
+		~AntiAliasNode(){};
 	private:
 		RGBA GetStackedColor(Position p);
 		RGBA colorAt(Position p) =0; 

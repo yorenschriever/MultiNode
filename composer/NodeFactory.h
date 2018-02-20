@@ -12,7 +12,8 @@
 
 class NodeFactory
 {
-    Node* create(std::string type){
+    public:
+    static Node* Create(std::string type){
         if (type=="Circle") 
             return new CircleNode();
 
@@ -21,6 +22,14 @@ class NodeFactory
 
         else if (type=="Sum")
             return new SumNode();
+
+        else if (type=="LFO")
+            return new LFONode();
+
+        else if (type=="Time")
+            return new TimeNode();
+
+        return 0;
     }
 };
 

@@ -15,7 +15,7 @@ class Node
 {
 	public:
 		Node(); //Todo, constructor with title, so the title must be set for each node
-		~Node();
+		virtual ~Node();
 		
 		std::string Title="";
 		int id=0;
@@ -31,7 +31,7 @@ class Node
 		//virtual std::map<std::string, OutputSocket*>* GetOutputSockets(){return 0;} //TODO this is done to the ui can access the outputsockets. fix this is a neat way.
 
 //#ifdef WITHCOMPOSER
-		int x,y;
+		int x=0,y=0;
 //#endif
 
 	protected:

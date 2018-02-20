@@ -7,6 +7,8 @@
 class ShapeNode : public GraphicsNode 
 {
 	public:
+		ShapeNode() {};
+		virtual ~ShapeNode() {};
 		RGBA Color;
 	private:
 		RGBA colorAt(Position p); 

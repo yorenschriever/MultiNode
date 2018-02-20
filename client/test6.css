@@ -60,7 +60,7 @@ div {
 }
 
 .ui-item {
-  postion: absolute;
+  position: absolute;
   width: 175px;
   /*height: 250px;*/
   /*background-color: #eef;*/
@@ -179,4 +179,25 @@ div {
 .socketval
 {
   width: 40px;
+}
+
+.del_node {
+  position: absolute;
+  right:0;
+  top:0;
+  padding-right:6px;
+  padding-top: 2px;
+}
+
+.del_node a {
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #aaa;
+  font-size: 10pt;
+}
+
+.create_node {
+  position: absolute;
+  top:0;
+  left:0;
 }

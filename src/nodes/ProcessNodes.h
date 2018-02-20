@@ -9,7 +9,7 @@ class SumNode : public Node
 {
 	public: 
 		SumNode();
-		~SumNode();
+		~SumNode(){};
 	protected:
 		virtual void ProcessInternal(Socket* caller);
 		InputSocket* ptrA;
@@ -21,7 +21,7 @@ class ToggleNode : public Node
 {
 	public: 
 		ToggleNode();
-		~ToggleNode();
+		~ToggleNode(){};
 	protected:
 		virtual void ProcessInternal(Socket* caller);
 		SOCKETTYPE lastValue=0;
@@ -33,7 +33,7 @@ class LFONode : public Node
 {
 	public: 
 		LFONode();
-		~LFONode();
+		~LFONode(){};
 	protected:
 		virtual void ProcessInternal(Socket* caller);
 
@@ -49,7 +49,7 @@ class TimeNode : public Node
 {
 	public: 
 		TimeNode();
-		~TimeNode();
+		~TimeNode(){};
 	protected:
 		virtual void ProcessInternal(Socket* caller);
 };

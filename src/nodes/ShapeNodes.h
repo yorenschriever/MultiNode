@@ -8,7 +8,7 @@ class RectangleNode : public ShapeNode
 {
 	public:
 		RectangleNode();		
-
+		~RectangleNode() {}
 	private:
 		bool intersects(Position p);
 
@@ -19,7 +19,8 @@ class RectangleNode : public ShapeNode
 class CircleNode : public ShapeNode
 {
 	public:
-		CircleNode();		
+		CircleNode();	
+		~CircleNode(){}	
 
 	private:
 		bool intersects(Position p);

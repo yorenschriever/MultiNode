@@ -9,6 +9,9 @@
 #include "../src/nodes/Node.h"
 #include "../src/NodeManager.h"
 #include "../src/sockets/InputSocket.h"
+#include <vector>
+
+#include "NodeFactory.h"
 
 using namespace std::placeholders;
 
@@ -69,7 +72,13 @@ void WebserviceComposer::handleMsg(uint8_t num, uint8_t * payload, size_t length
             comm.params["id"].AsIndex(), 
             comm.params["sock"].AsString());
 
+    if (!strcmp("Create",comm.name))
+        CreateNode(
+            comm.params["name"].AsString());
 
+    if (!strcmp("Delete",comm.name))
+        DeleteNode(
+            comm.params["id"].AsIndex());
 
 }
 
@@ -212,6 +221,41 @@ void WebserviceComposer::Connect(int idinp, std::string inputsocket, int idout, 
     SendNodeToClient(nodeinp);
 }
 
+void WebserviceComposer::CreateNode(std::string name)
+{
+    Node* node = NodeFactory::Create(name);
+
+    if (node!=0)
+        SendNodeToClient(node);
+}
+
+void WebserviceComposer::DeleteNode(int id)
+{
+    Node* node = NodeManager::GetNode(id);
+    if (node==0)
+        return;
+
+    //make a list of all connected nodes, so we can update them in the ui
+    std::vector<Node*> connectedNodes;
+    std::map<std::string, OutputSocket*>* socks = node->GetOutputSockets();
+    for (std::map<std::string, OutputSocket*>::iterator it=socks->begin(); it!=socks->end(); ++it)
+    {
+        Socket* connsock = it->second->GetConnectedSocket();
+        if (connsock!=0)
+        {
+            connectedNodes.push_back(connsock->GetNode());
+        }
+    }
+
+    delete node;   
+
+    for(std::vector<Node*>::iterator it = connectedNodes.begin(); it != connectedNodes.end(); ++it) {
+        SendNodeToClient(*it);
+    }
+
+    SendDeleteNodeToClient(id); 
+}
+
 void WebserviceComposer::SendAllNodesToClient()
 {
     NodeManager::ResetIterator();
@@ -241,6 +285,17 @@ void WebserviceComposer::SendNodeToClient(Node* node)
     if (outsocks!=0)
         result += ",\"outputs\":[" + serializeOutputSockets(outsocks) + "]";
 
+    result += "}}";
+    ws->sendMessage(result);
+}
+
+void WebserviceComposer::SendDeleteNodeToClient(int id)
+{
+    Debug::Info(std::string("Sending delete node: ") + std::to_string(id));
+    
+    std::string result = "";
+    result += "{\"deletenode\":{";
+    result += "\"id\":" + std::to_string(id);
     result += "}}";
     ws->sendMessage(result);
 }

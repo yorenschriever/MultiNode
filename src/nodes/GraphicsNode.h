@@ -12,6 +12,8 @@ class GraphicsNode : public Node
 {
 	public:
 		GraphicsNode();
+		virtual ~GraphicsNode(){};
+
 		GraphicsNode* UnderlyingNode=0; 	
 		virtual RGBA GetStackedColor(Position p);
 	protected:

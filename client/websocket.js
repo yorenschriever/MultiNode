@@ -24,12 +24,25 @@ exampleSocket.onmessage = function(event) {
         drawNodeConnections();
     }
 
-        
+    if (parsed.deletenode)
+    {
+        deleteNode(parsed.deletenode.id)   
+    }
     //todo, this will bind a lot of events multiple times,
     //for example socket ondblclick.
     //change this to only add events to the changed/newly generated node
     window.onload();
 };
+
+
+function deleteNode(id)
+{
+    nodes[id].element.remove();
+    
+    delete nodes[id];
+
+
+}
 
 function addNode(node)
 {
@@ -141,6 +154,8 @@ function drawNode(node, element)
 
 
     html += '<div class="socket_end"></div> ';
+
+    html += '<div class="del_node"><a href="javascript:window.UploadDelete('+node.id+')">X</a></a>';
     //html += '</div>';
 
     
@@ -206,3 +221,29 @@ function UploadDisconnect(node, sock)
     exampleSocket.send(content); 
 }
 window.UploadDisconnect = UploadDisconnect;
+
+function UploadCreate(name)
+{
+    console.log("Creating ", name);
+
+    content = JSON.stringify({cmd: "Create", params : {
+        name: name
+    }});
+                
+    console.log(content);
+    exampleSocket.send(content); 
+}
+window.UploadCreate = UploadCreate;
+
+function UploadDelete(id)
+{
+    console.log("Deleting ", name);
+
+    content = JSON.stringify({cmd: "Delete", params : {
+        id: id
+    }});
+                
+    console.log(content);
+    exampleSocket.send(content); 
+}
+window.UploadDelete = UploadDelete;

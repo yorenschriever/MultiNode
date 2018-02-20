@@ -31,8 +31,12 @@ class WebserviceComposer{
         void Disconnect(int id, std::string inputsocket);
         void Connect(int idinp, std::string inputsocket, int idout, std::string outputsocket);
 
+        void CreateNode(std::string name);
+        void DeleteNode(int id);
+
         void SendAllNodesToClient();
         void SendNodeToClient(Node* node);
+        void SendDeleteNodeToClient(int id);
     private:
         IWebsocket* ws;
 
