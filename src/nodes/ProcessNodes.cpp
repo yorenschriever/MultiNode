@@ -97,3 +97,24 @@ void TimeNode::ProcessInternal(Socket* caller)
 	else
 		setOutput("Value", ((SOCKETTYPE) Time::Millis() / getInput("Prescale")) );
 }
+
+
+SinNode::SinNode(){
+	Title="Sin";
+	ptrTime = CreateInputSocket("Time",Pull,0);
+	ptrPeriod = CreateInputSocket("Period",Pull,1);
+	ptrAmplitude = CreateInputSocket("Amplitude",Pull,1);
+	ptrOffset = CreateInputSocket("Offset",Pull,0);
+	ptrPhase = CreateInputSocket("Phase",Pull,0);
+
+	ptrValue = CreateOutputSocket("Value",Pull);
+}
+
+void SinNode::ProcessInternal(Socket* caller)
+{
+	SOCKETTYPE period = ptrPeriod->GetValue(); 
+	if (period==0)
+		return;
+
+	setOutput("Value",getInput("Offset")+getInput("Amplitude") * sin(getInput("Time") * 2*3.141592658 / period + getInput("Phase")*3.14159265/180.0));
+}

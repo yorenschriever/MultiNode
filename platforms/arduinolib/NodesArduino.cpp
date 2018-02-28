@@ -1,5 +1,7 @@
 #include "Arduino.h" //must be on top
+#include <driver/dac.h>
 #include "NodesArduino.h"
+
 
 PinInputNode::PinInputNode(int pin){
     CreateOutputSocket("Value",Push);
@@ -55,4 +57,27 @@ void PinOutputNode::ProcessInternal(Socket* caller)
 		value = newValue;
 		digitalWrite(pin,value > 0);
 	}
+}
+
+
+AnalogOutNode::AnalogOutNode(){
+	Title="AnalogOut";
+	ptrOut25 = CreateInputSocket("Output 25",Pull,0);
+	ptrOut26 = CreateInputSocket("Output 26",Pull,1);	
+}
+
+void AnalogOutNode::ProcessInternal(Socket* caller)
+{
+
+	float valA = ptrOut25->GetValue();
+	if (valA<0) valA=0;
+	if (valA>255) valA=255;
+
+	float valB = ptrOut26->GetValue();
+	if (valB<0) valB=0;
+	if (valB>255) valB=255;
+
+    dac_out_voltage(DAC_CHANNEL_1, valA);
+    dac_out_voltage(DAC_CHANNEL_2, valB);
+
 }

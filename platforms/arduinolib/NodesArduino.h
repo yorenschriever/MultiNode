@@ -25,4 +25,15 @@ class PinOutputNode : public Node {
 		bool value;
 };
 
+class AnalogOutNode : public Node {
+	public: 
+		AnalogOutNode();
+	protected:
+		virtual void ProcessInternal(Socket* caller);
+		
+	InputSocket* ptrOut25;
+	InputSocket* ptrOut26;
+
+};
+
 #endif

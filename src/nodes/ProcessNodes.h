@@ -41,7 +41,6 @@ class LFONode : public Node
 		InputSocket* ptrAmplitude;
 		InputSocket* ptrOffset;
 		OutputSocket* ptrValue;
-
 };
 
 
@@ -52,6 +51,23 @@ class TimeNode : public Node
 		~TimeNode(){};
 	protected:
 		virtual void ProcessInternal(Socket* caller);
+};
+
+
+class SinNode : public Node
+{
+	public: 
+		SinNode();
+		~SinNode(){};
+	protected:
+		virtual void ProcessInternal(Socket* caller);
+
+		InputSocket* ptrTime;
+		InputSocket* ptrPeriod;
+		InputSocket* ptrAmplitude;
+		InputSocket* ptrPhase;
+		InputSocket* ptrOffset;
+		OutputSocket* ptrValue;
 };
 
 #endif
